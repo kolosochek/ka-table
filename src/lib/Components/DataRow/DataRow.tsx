@@ -31,11 +31,6 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
             hasReordering: true
         });
         dataRow = addElementAttributes(reorderedRowProps, props, dataRow);
-        // debug
-        // tslint:disable-next-line:no-console
-        console.log('dataRow')
-        // tslint:disable-next-line:no-console
-        console.log(dataRow)
 
     }
 

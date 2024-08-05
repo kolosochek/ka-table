@@ -45,7 +45,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     return (
         <>
             {data.map((d) => {
-                if (d.groupMark === groupMark) {
+                if (d?.groupMark === groupMark) {
                     const groupIndex = d.key.length - 1;
                     const group = groups && groups[groupIndex];
                     const column = group && groupedColumns.find((c) => c.key === group.columnKey)!;
@@ -65,11 +65,11 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
                             key={JSON.stringify(d.key)}
                         />
                     );
-                } else if (d.groupSummaryMark === groupSummaryMark) {
+                } else if (d?.groupSummaryMark === groupSummaryMark) {
                     return <GroupSummaryRow {...props} groupData={d.groupData} key={d.key} groupIndex={d.groupIndex} />;
                 } else {
-                    const isTreeGroup = d.treeGroupMark === treeGroupMark;
-                    const isTreeData =  d.treeDataMark === treeDataMark;
+                    const isTreeGroup = d?.treeGroupMark === treeGroupMark;
+                    const isTreeData =  d?.treeDataMark === treeDataMark;
                     const isTreeRow = isTreeGroup || isTreeData;
                     const rowData = isTreeRow ? d.rowData : d;
                     const rowKeyValue = getValueByField(rowData, rowKeyField);
