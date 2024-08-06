@@ -183,7 +183,7 @@ var getDraggableProps = function (_a) {
             event.preventDefault();
         }
     } : {};
-    return __assign({ draggable: true, onDragStart: function (event) {
+    return __assign({ onDragStart: function (event) {
             count = 0;
             event.dataTransfer.setData('ka-draggableKeyValue', JSON.stringify(key));
             event.currentTarget.classList.add(draggedClass);

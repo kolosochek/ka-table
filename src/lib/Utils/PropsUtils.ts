@@ -216,7 +216,6 @@ export const getDraggableProps = ({
         }
     } : {};
     return {
-        draggable: true,
         onDragStart: (event) => {
             count = 0;
             event.dataTransfer.setData('ka-draggableKeyValue', JSON.stringify(key));
