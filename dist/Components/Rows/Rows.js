@@ -14,7 +14,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
     if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
+        desc = { enumerable: true, get: function() { return m[k]; } };
     }
     Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
@@ -54,7 +54,8 @@ var Rows = function (props) {
     }, [firstRowRef, onFirstRowRendered]);
     var rowRefLink = firstRowRef;
     return (react_1.default.createElement(react_1.default.Fragment, null, data.map(function (d) {
-        if ((d === null || d === void 0 ? void 0 : d.groupMark) === groupMark) {
+        if (typeof(d) === "undefined") return ;
+        if ((d === null || d === void 0 ? void 0 : d?.groupMark) === groupMark) {
             var groupIndex = d.key.length - 1;
             var group_1 = groups && groups[groupIndex];
             var column = group_1 && groupedColumns.find(function (c) { return c.key === group_1.columnKey; });
