@@ -35,6 +35,7 @@ export class CssClasses {
     public theadCellWrapper = 'ka-thead-cell-wrapper';
     public theadRow = 'ka-tr ka-thead-row';
     public draggedRow = 'ka-dragged-row';
+    public rowExpanded = 'ka-row-state-expanded';
     public dragOverRow = 'ka-drag-over-row';
     public draggedColumn = 'ka-dragged-column';
     public dragOverColumn = 'ka-drag-over-column';

@@ -39,6 +39,7 @@ var CssClasses = /** @class */ (function () {
         this.theadCellWrapper = 'ka-thead-cell-wrapper';
         this.theadRow = 'ka-tr ka-thead-row';
         this.draggedRow = 'ka-dragged-row';
+        this.rowExpanded = 'ka-row-state-expanded';
         this.dragOverRow = 'ka-drag-over-row';
         this.draggedColumn = 'ka-dragged-column';
         this.dragOverColumn = 'ka-drag-over-column';

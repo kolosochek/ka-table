@@ -158,7 +158,7 @@ module.exports = {
         "no-bitwise": "error",
         "no-caller": "error",
         "no-cond-assign": "error",
-        "no-console": "off",
+        "no-console": "warn",
         "no-debugger": "warn",
         "no-duplicate-case": "error",
         "no-duplicate-imports": "error",

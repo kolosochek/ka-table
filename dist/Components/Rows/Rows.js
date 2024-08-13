@@ -14,7 +14,7 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
     if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-        desc = { enumerable: true, get: function() { return m[k]; } };
+      desc = { enumerable: true, get: function() { return m[k]; } };
     }
     Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
@@ -53,9 +53,10 @@ var Rows = function (props) {
         onFirstRowRendered(firstRowRef);
     }, [firstRowRef, onFirstRowRendered]);
     var rowRefLink = firstRowRef;
-    return (react_1.default.createElement(react_1.default.Fragment, null, data.map(function (d) {
-        if (typeof(d) === "undefined") return ;
-        if ((d === null || d === void 0 ? void 0 : d?.groupMark) === groupMark) {
+    return (react_1.default.createElement(react_1.default.Fragment, null, data === null || data === void 0 ? void 0 : data.map(function (d) {
+        if (typeof (d) === 'undefined')
+            return;
+        if ((d === null || d === void 0 ? void 0 : d.groupMark) === groupMark) {
             var groupIndex = d.key.length - 1;
             var group_1 = groups && groups[groupIndex];
             var column = group_1 && groupedColumns.find(function (c) { return c.key === group_1.columnKey; });
@@ -74,7 +75,7 @@ var Rows = function (props) {
             var isSelectedRow = selectedRows.some(function (s) { return s === rowKeyValue_1; });
             var isDetailsRowShown = detailsRows.some(function (r) { return r === rowKeyValue_1; });
             var rowEditableCells = (0, FilterUtils_1.getRowEditableCells)(rowKeyValue_1, editableCells);
-            var dataRow = (react_1.default.createElement(DataAndDetailsRows_1.default, { childComponents: props.childComponents, columns: props.columns, dispatch: dispatch, editableCells: props.editableCells, editingMode: props.editingMode, isTreeGroup: isTreeGroup, isTreeExpanded: isTreeExpanded, treeDeep: isTreeRow === true ? d.treeDeep : undefined, treeExpandButtonColumnKey: treeExpandButtonColumnKey, format: format, groupColumnsCount: props.groupColumnsCount, isDetailsRowShown: isDetailsRowShown, isSelectedRow: isSelectedRow, key: rowKeyValue_1, rowData: rowData, rowEditableCells: rowEditableCells, rowKeyField: props.rowKeyField, rowKeyValue: rowKeyValue_1, rowReordering: rowReordering, selectedRows: props.selectedRows, trRef: rowRefLink, validation: validation }));
+            var dataRow = (react_1.default.createElement(DataAndDetailsRows_1.default, { childComponents: props.childComponents, columns: props.columns, dispatch: dispatch, editableCells: props.editableCells, editingMode: props.editingMode, isTreeGroup: isTreeGroup, isTreeExpanded: isTreeExpanded, treeDeep: isTreeRow ? d === null || d === void 0 ? void 0 : d.treeDeep : undefined, treeExpandButtonColumnKey: treeExpandButtonColumnKey, format: format, groupColumnsCount: props.groupColumnsCount, isDetailsRowShown: isDetailsRowShown, isSelectedRow: isSelectedRow, key: rowKeyValue_1, rowData: rowData, rowEditableCells: rowEditableCells, rowKeyField: props.rowKeyField, rowKeyValue: rowKeyValue_1, rowReordering: rowReordering, selectedRows: props.selectedRows, trRef: rowRefLink, validation: validation }));
             rowRefLink = undefined;
             return dataRow;
         }

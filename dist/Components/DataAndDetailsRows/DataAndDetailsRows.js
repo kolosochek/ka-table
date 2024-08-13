@@ -20,7 +20,7 @@ var DetailsRow_1 = __importDefault(require("../DetailsRow/DetailsRow"));
 var DataAndDetailsRows = function (props) {
     var isDetailsRowShown = props.isDetailsRowShown;
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(DataRow_1.default, __assign({}, props)),
+        react_1.default.createElement(DataRow_1.default, __assign({}, props), isDetailsRowShown && react_1.default.createElement(DetailsRow_1.default, __assign({}, props))),
         isDetailsRowShown && react_1.default.createElement(DetailsRow_1.default, __assign({}, props))));
 };
 exports.default = DataAndDetailsRows;

@@ -13,6 +13,7 @@ import { getTreeData } from './TreeUtils';
 import { getValidatedEditableCells } from './ReducerUtils';
 import { getValueByField } from './DataUtils';
 import { groupColumn } from '../actionCreators';
+import defaultOptions from '../defaultOptions';
 
 export function extendProps<T = HTMLElement>(
     childElementAttributes: AllHTMLAttributes<T>,
@@ -184,32 +185,34 @@ export const getDraggableProps = ({
     actionCreator,
     draggedClass,
     dragOverClass,
-    hasReordering
+    hasReordering,
+    ariaDisableDragOver
 }: {
     key: any,
     dispatch: DispatchFunc,
     actionCreator: (draggableKeyValue: any, targetKeyValue: any) => any,
     draggedClass: string,
     dragOverClass: string,
-    hasReordering: boolean
+    hasReordering: boolean,
+    ariaDisableDragOver?: boolean,
 }): ChildAttributesItem<any> => {
     let count: number = 0;
     const reorderingProps: ChildAttributesItem<any> = hasReordering ? {
         onDragEnter: (event) => {
             count++;
-            if (!event.currentTarget.classList.contains(dragOverClass)) {
+            if (!ariaDisableDragOver && !event.currentTarget.classList.contains(dragOverClass)) {
                 event.currentTarget.classList.add(dragOverClass);
             }
             event.preventDefault();
         },
         onDragLeave: (event) => {
             count--;
-            if (count === 0) {
+            if (count === 0 && event.currentTarget.classList.contains(dragOverClass)) {
                 event.currentTarget.classList.remove(dragOverClass);
             }
         },
         onDragOver: (event) => {
-            if (!event.currentTarget.classList.contains(dragOverClass)) {
+            if (!ariaDisableDragOver && !event.currentTarget.classList.contains(dragOverClass)) {
                 event.currentTarget.classList.add(dragOverClass);
             }
             event.preventDefault();
@@ -223,12 +226,16 @@ export const getDraggableProps = ({
             event.dataTransfer.effectAllowed = 'move';
         },
         onDragEnd: (event) => {
-            event.currentTarget.classList.remove(draggedClass);
+            if (event.currentTarget.classList.contains(draggedClass)) {
+                event.currentTarget.classList.remove(draggedClass);
+            }
         },
         onDrop: (event) => {
-            event.currentTarget.classList.remove(dragOverClass);
+            if (event.currentTarget.classList.contains(dragOverClass)) {
+                event.currentTarget.classList.remove(dragOverClass);
+            }
             const keyDataTransfer = event.dataTransfer.getData('ka-draggableKeyValue')
-            if (hasReordering && keyDataTransfer){
+            if (hasReordering && keyDataTransfer && !event.currentTarget.classList.contains(defaultOptions.css.rowExpanded)){
                 const draggableKeyValue = JSON.parse(keyDataTransfer);
                 dispatch(actionCreator(draggableKeyValue, key));
             }

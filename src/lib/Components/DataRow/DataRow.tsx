@@ -1,15 +1,15 @@
-import { addElementAttributes, getElementCustomization } from '../../Utils/ComponentUtils';
+import {addElementAttributes, getElementCustomization} from '../../Utils/ComponentUtils';
 
-import { ChildAttributesItem } from '../../types';
+import {ChildAttributesItem} from '../../types';
 import DataRowContent from '../DataRowContent/DataRowContent';
 import EmptyCells from '../EmptyCells/EmptyCells';
-import { IRowProps } from '../../props';
+import {IRowProps} from '../../props';
 import React from 'react';
 import defaultOptions from '../../defaultOptions';
-import { getDraggableProps } from '../../Utils/PropsUtils';
-import { reorderRows } from '../../actionCreators';
+import {getDraggableProps} from '../../Utils/PropsUtils';
+import {reorderRows} from '../../actionCreators';
 
-const DataRow: React.FunctionComponent<IRowProps> = (props) => {
+const DataRow: React.FunctionComponent<IRowProps> = (props: IRowProps & { children?: React.ReactNode }) => {
     const {
         dispatch,
         groupColumnsCount,
@@ -17,24 +17,24 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
         rowKeyValue,
         rowReordering,
         trRef,
-        childComponents
+        childComponents,
+        children
     } = props;
     let dataRow = childComponents.dataRow;
-
     if (rowReordering) {
         const reorderedRowProps: ChildAttributesItem<IRowProps> = getDraggableProps({
             key: rowKeyValue,
             dispatch,
             actionCreator: reorderRows,
             draggedClass: defaultOptions.css.draggedRow,
-            dragOverClass: defaultOptions.css.dragOverRow,
-            hasReordering: true
+            dragOverClass:  React.isValidElement(children)  ? '' : defaultOptions.css.dragOverRow,
+            hasReordering: true,
+            ariaDisableDragOver: React.isValidElement(children)
         });
         dataRow = addElementAttributes(reorderedRowProps, props, dataRow);
-
     }
 
-    const { elementAttributes, content } = getElementCustomization({
+    const {elementAttributes, content} = getElementCustomization({
         className: `${defaultOptions.css.row} ${isSelectedRow ? defaultOptions.css.rowSelected : ''}`
     }, props, dataRow);
 
@@ -44,7 +44,7 @@ const DataRow: React.FunctionComponent<IRowProps> = (props) => {
                 ? <>{content}</>
                 : (
                     <>
-                        <EmptyCells count={groupColumnsCount} childComponents={childComponents} />
+                        <EmptyCells count={groupColumnsCount} childComponents={childComponents}/>
                         <DataRowContent {...props} />
                     </>
                 )

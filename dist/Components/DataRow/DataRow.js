@@ -22,7 +22,7 @@ var defaultOptions_1 = __importDefault(require("../../defaultOptions"));
 var PropsUtils_1 = require("../../Utils/PropsUtils");
 var actionCreators_1 = require("../../actionCreators");
 var DataRow = function (props) {
-    var dispatch = props.dispatch, groupColumnsCount = props.groupColumnsCount, isSelectedRow = props.isSelectedRow, rowKeyValue = props.rowKeyValue, rowReordering = props.rowReordering, trRef = props.trRef, childComponents = props.childComponents;
+    var dispatch = props.dispatch, groupColumnsCount = props.groupColumnsCount, isSelectedRow = props.isSelectedRow, rowKeyValue = props.rowKeyValue, rowReordering = props.rowReordering, trRef = props.trRef, childComponents = props.childComponents, children = props.children;
     var dataRow = childComponents.dataRow;
     if (rowReordering) {
         var reorderedRowProps = (0, PropsUtils_1.getDraggableProps)({
@@ -30,8 +30,9 @@ var DataRow = function (props) {
             dispatch: dispatch,
             actionCreator: actionCreators_1.reorderRows,
             draggedClass: defaultOptions_1.default.css.draggedRow,
-            dragOverClass: defaultOptions_1.default.css.dragOverRow,
-            hasReordering: true
+            dragOverClass: react_1.default.isValidElement(children) ? '' : defaultOptions_1.default.css.dragOverRow,
+            hasReordering: true,
+            ariaDisableDragOver: react_1.default.isValidElement(children)
         });
         dataRow = (0, ComponentUtils_1.addElementAttributes)(reorderedRowProps, props, dataRow);
     }

@@ -44,7 +44,8 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
     let rowRefLink: any = firstRowRef;
     return (
         <>
-            {data.map((d) => {
+            {data?.map((d) => {
+                if (typeof(d) === 'undefined') return ;
                 if (d?.groupMark === groupMark) {
                     const groupIndex = d.key.length - 1;
                     const group = groups && groups[groupIndex];
@@ -86,7 +87,7 @@ const Rows: React.FunctionComponent<IRowsProps> = (props) => {
                             editingMode={props.editingMode}
                             isTreeGroup={isTreeGroup}
                             isTreeExpanded={isTreeExpanded}
-                            treeDeep={isTreeRow === true ? d.treeDeep : undefined}
+                            treeDeep={isTreeRow ? d?.treeDeep : undefined}
                             treeExpandButtonColumnKey={treeExpandButtonColumnKey}
                             format={format}
                             groupColumnsCount={props.groupColumnsCount}

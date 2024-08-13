@@ -35,6 +35,7 @@ export declare class CssClasses {
     theadCellWrapper: string;
     theadRow: string;
     draggedRow: string;
+    rowExpanded: string;
     dragOverRow: string;
     draggedColumn: string;
     dragOverColumn: string;

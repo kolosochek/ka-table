@@ -19,6 +19,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDraggableProps = exports.groupPanelOnDrop = exports.prepareTableOptions = exports.getPagesCountByProps = exports.getSortedColumns = exports.getSelectedData = exports.isValid = exports.getData = exports.areAllVisibleRowsSelected = exports.areAllFilteredRowsSelected = exports.getFilteredData = exports.mergeProps = exports.extendProps = void 0;
 var PagingUtils_1 = require("./PagingUtils");
@@ -30,6 +33,7 @@ var TreeUtils_1 = require("./TreeUtils");
 var ReducerUtils_1 = require("./ReducerUtils");
 var DataUtils_1 = require("./DataUtils");
 var actionCreators_1 = require("../actionCreators");
+var defaultOptions_1 = __importDefault(require("../defaultOptions"));
 function extendProps(childElementAttributes, childProps, childComponent) {
     var resultProps = childElementAttributes;
     var childCustomAttributes = childComponent && childComponent.elementAttributes && childComponent.elementAttributes(childProps);
@@ -160,40 +164,44 @@ var groupPanelOnDrop = function (event, dispatch) {
 };
 exports.groupPanelOnDrop = groupPanelOnDrop;
 var getDraggableProps = function (_a) {
-    var key = _a.key, dispatch = _a.dispatch, actionCreator = _a.actionCreator, draggedClass = _a.draggedClass, dragOverClass = _a.dragOverClass, hasReordering = _a.hasReordering;
+    var key = _a.key, dispatch = _a.dispatch, actionCreator = _a.actionCreator, draggedClass = _a.draggedClass, dragOverClass = _a.dragOverClass, hasReordering = _a.hasReordering, ariaDisableDragOver = _a.ariaDisableDragOver;
     var count = 0;
     var reorderingProps = hasReordering ? {
         onDragEnter: function (event) {
             count++;
-            if (!event.currentTarget.classList.contains(dragOverClass)) {
+            if (!ariaDisableDragOver && !event.currentTarget.classList.contains(dragOverClass)) {
                 event.currentTarget.classList.add(dragOverClass);
             }
             event.preventDefault();
         },
         onDragLeave: function (event) {
             count--;
-            if (count === 0) {
+            if (count === 0 && event.currentTarget.classList.contains(dragOverClass)) {
                 event.currentTarget.classList.remove(dragOverClass);
             }
         },
         onDragOver: function (event) {
-            if (!event.currentTarget.classList.contains(dragOverClass)) {
+            if (!ariaDisableDragOver && !event.currentTarget.classList.contains(dragOverClass)) {
                 event.currentTarget.classList.add(dragOverClass);
             }
             event.preventDefault();
         }
     } : {};
-    return __assign({ draggable: true, onDragStart: function (event) {
+    return __assign({ onDragStart: function (event) {
             count = 0;
             event.dataTransfer.setData('ka-draggableKeyValue', JSON.stringify(key));
             event.currentTarget.classList.add(draggedClass);
             event.dataTransfer.effectAllowed = 'move';
         }, onDragEnd: function (event) {
-            event.currentTarget.classList.remove(draggedClass);
+            if (event.currentTarget.classList.contains(draggedClass)) {
+                event.currentTarget.classList.remove(draggedClass);
+            }
         }, onDrop: function (event) {
-            event.currentTarget.classList.remove(dragOverClass);
+            if (event.currentTarget.classList.contains(dragOverClass)) {
+                event.currentTarget.classList.remove(dragOverClass);
+            }
             var keyDataTransfer = event.dataTransfer.getData('ka-draggableKeyValue');
-            if (hasReordering && keyDataTransfer) {
+            if (hasReordering && keyDataTransfer && !event.currentTarget.classList.contains(defaultOptions_1.default.css.rowExpanded)) {
                 var draggableKeyValue = JSON.parse(keyDataTransfer);
                 dispatch(actionCreator(draggableKeyValue, key));
             }

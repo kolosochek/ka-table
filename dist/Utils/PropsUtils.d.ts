@@ -20,11 +20,12 @@ export declare const prepareTableOptions: (props: ITableProps) => {
     groupedData: any[];
 };
 export declare const groupPanelOnDrop: (event: React.DragEvent, dispatch: DispatchFunc) => void;
-export declare const getDraggableProps: ({ key, dispatch, actionCreator, draggedClass, dragOverClass, hasReordering }: {
+export declare const getDraggableProps: ({ key, dispatch, actionCreator, draggedClass, dragOverClass, hasReordering, ariaDisableDragOver }: {
     key: any;
     dispatch: DispatchFunc;
     actionCreator: (draggableKeyValue: any, targetKeyValue: any) => any;
     draggedClass: string;
     dragOverClass: string;
     hasReordering: boolean;
+    ariaDisableDragOver?: boolean;
 }) => ChildAttributesItem<any>;
